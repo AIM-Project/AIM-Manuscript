@@ -16,3 +16,4 @@ This folder contains figures and text for the "CompareML" articles.
 - We use the [Data in Golub. Paper](https://www.bioconductor.org/packages/devel/data/experiment/html/golubEsets.html) to reprocude most of the paper. However, if the reproduced paper is based on Data Version 2 or Data Version 3, we will use the corresponding data.
 - Associated Repos\
 [Previous work](https://github.com/victoriastodden/ReproducibilityCancerResearch)
+If you have any questions, please contact us xwu64@illinois.edu or vcs@stodden.net.
