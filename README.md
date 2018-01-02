@@ -6,7 +6,7 @@ We started from answering the third question at beginning of Three Dream Applica
 This folder contains two notebooks, one for the table to referencing related articles and the other one for summary of each article.
 - Part2: Reproducing Classification Algorithms\
 This folder contains 12 notebooks, 5 for each article we studied in depth(5/23), 5 for mix comparison between the articles selected and 2 for comparison summaries. We also included the intermediate .Rdata file we created in the folder.
-- Part3: Related_Articles\
+- Part3: Related Articles\
 This folder contains figures and text for the "CompareML" articles.
 ## Reference:
 - Data:
