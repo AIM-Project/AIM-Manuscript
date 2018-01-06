@@ -1,4 +1,4 @@
-# CompareML-Manuscript
+# AIM-Manuscript
 ## Project Description:
 We started from answering the third question at beginning of Three Dream Applications of Verifiable Computational Results by Matan Gavish and David Donoho. Our reproduce work is based on the famous acute lymphoblastic leukemia dataset(Golub.) mentioned in the question. We looked trough about 25 papers using the dataset and select 5 to go in depth. We reproduced the work in those 5 paper in R and compare our result with the publish result. We also compared the result of mixing different steps in ML pipeline between different paper and checked the impact of each step in ML pipeline.
 ## Repo Folder Contents:
