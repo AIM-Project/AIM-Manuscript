@@ -5,7 +5,7 @@ We present code, data, and supplementary figures and documents used in the prepa
 
 ## Repo Folder Contents:
 - LiteratureSearch\
-This folder contains two notebooks, one giving the results of our literature analysis (LiteratureSearchResults.ipynb) and the other presenting ML pipelines for the articles (SummaryofMLpipelines.ipynb).
+This folder contains two notebooks, one giving the results of our literature analysis ([LiteratureSearchResults.ipynb](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/LiteratureSearchResults.ipynb)) and the other presenting ML pipelines for the articles (SummaryofMLpipelines.ipynb).
 - ReproducingMLpipelines\
 This folder contains 12 notebooks, 5 for each article we studied in depth, 5 for the comparison of the articles\' methods (Table 1 in the manuscript), and 2 for comparison summaries. We also included the intermediate .Rdata file we created in the folder.
 ## Data and Associated Repos:
