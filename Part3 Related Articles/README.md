@@ -1,2 +1,2 @@
 # Part3 Related Articles
-This folder contains all the literature we visited during this research.
+This folder contains the 30 articles we discovered in the literature search.
