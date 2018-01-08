@@ -1,4 +1,4 @@
-# Part1 Literature Analysis
+# Literature Search and Summary
 ## Dataset&Classifier file:
 Summary of all the paper visited, details such as the index, the dataset used, classifier, results etc. included.
 ## SummaryUpdate file:
