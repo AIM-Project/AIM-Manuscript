@@ -9,11 +9,10 @@ This folder contains two notebooks, one giving the results of our literature ana
 - ReproducingMLpipelines\
 This folder contains 12 notebooks, 5 for each article we studied in depth, 5 for the comparison of the articles\' methods (Table 1 in the manuscript), and 2 for comparison summaries. We also included the intermediate .Rdata file we created in the folder.
 ## References:
-- Data:
-- [Data in Golub. Paper](https://www.bioconductor.org/packages/devel/data/experiment/html/golubEsets.html):The datasets used in the Golub. Paper with training dataset(38 by 7129) and testing dataset(34 by 7129).
-- [Data Version 2](https://cran.r-project.org/web/packages/spikeslab):`leukemia` data in R package spikeslab(72 by 3571). We have shown that this data is a transformed data based on the original data.
+- [Data in the Golub et al. paper](https://www.bioconductor.org/packages/devel/data/experiment/html/golubEsets.html): The datasets used in the Golub. Paper with training dataset(38 by 7129) and testing dataset(34 by 7129).
+- [Data Version 2](https://cran.r-project.org/web/packages/spikeslab): `leukemia` data in R package spikeslab(72 by 3571). We have shown that this data is a transformed data based on the original data.
 - [Data Version 3](http://faculty.mssm.edu/gey01/multtest/): `golub` data in R package multtest. In which, `golub` is the training dataset(38 by 3051) and `golub.cl` is the testing dataset(34 by 3051). We also have shown that this data is another transformed data based on the original data.
-- We use the [Data in the Golub et al. Paper](https://www.bioconductor.org/packages/devel/data/experiment/html/golubEsets.html) (also included in the LiteratureSearch folder) to reproduce results in the papers.
+- We use the [Data in the Golub et al. paper](https://www.bioconductor.org/packages/devel/data/experiment/html/golubEsets.html) (also included in the LiteratureSearch folder) to reproduce results in the papers.
 - Associated Repos\
 [Previous work](https://github.com/victoriastodden/ReproducibilityCancerResearch)
 
