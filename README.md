@@ -1,4 +1,4 @@
-# This repo contains supporting documents for the manuscript \"Defining the AIM: An Abstraction for Improving Machine Learning Prediction\"
+# This repo contains supporting documents for the manuscript \"Defining the AIM: An Abstraction for Improving Machine Learning Prediction\" submitted to sysML2018
 
 ## Project Description:
 We present code, data, and supplementary figures and documents used in the preparation of the manuscript \"Defining the AIM: An Abstraction for Improving Machine Learning Prediction\". We illustrate the need for abstraction describing Machine Learning pipelines to facilitate the comparison, improvement, and study of ML results by focusing on the famous ALL/AML dataset \[[1](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/Articles/paper1.pdf)\]. We define an abstraction layer for leaderboard style competitions to improve ML results. 
