@@ -1,7 +1,7 @@
-# Part2 Reproducint Classification Algorithms
+# Comparing Classification Algorithms
 
 ## Paper Folders:
-Each fold represent one paper and the reimplementation based on that paper.
+Each folder contains the reimplementation for one of the 5 papers studied.
 ## FeatureSelectionComparison file:
 This file contains the comparison analysis for the feature selected by methods in different paper.
 ## SummaryOfClassification file:
