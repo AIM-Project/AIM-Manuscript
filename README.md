@@ -1,10 +1,10 @@
 ## Project Description:
 We present code, data, and supplementary figures and documents used in the preparation of the manuscript \"Defining the AIM: An Abstraction for Improving Machine Learning Prediction\". We illustrate the need for abstraction describing Machine Learning pipelines to facilitate the comparison, improvement, and study of ML results by focusing on the famous ALL/AML dataset \[[1](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/Articles/paper1.pdf)\]. We define an abstraction layer for leaderboard style competitions to improve ML results. 
 
-## Repo Folder Contents:
-- LiteratureSearch:\
+## Repo Contents:
+- LiteratureSearch folder:\
 This folder contains two notebooks, one giving the results of our literature analysis ([LiteratureSearchResults.ipynb](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/LiteratureSearchResults.ipynb)) and the other presenting ML pipelines for the articles ([SummaryofMLpipelines.ipynb](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/SummaryofMLpipelines.ipynb)).
-- ReproducingMLpipelines:\
+- ReproducingMLpipelines folder:\
 This folder contains 12 notebooks, 5 for each article we studied in depth, 5 for the comparison of the articles\' methods (Table 1 in the manuscript), and 2 for comparison summaries. We also included the intermediate .Rdata file we created in the folder.
 ## Data and Associated Repos:
 - [Data in the Golub et al. paper](https://www.bioconductor.org/packages/devel/data/experiment/html/golubEsets.html)\[[1](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/Articles/paper1.pdf)\]: The datasets used in \[[1](https://github.com/AIM-Project/AIM-Manuscript/blob/master/LiteratureSearch/Articles/paper1.pdf)\] with training dataset(38 by 7129) and testing dataset(34 by 7129).
