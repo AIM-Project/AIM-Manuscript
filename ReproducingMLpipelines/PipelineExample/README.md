@@ -3,6 +3,8 @@
 This is an example (using paper1) for running the pipeline using reproducible 
 [containers](https://opensource.com/resources/what-are-linux-containers). The original code is in the [source folder](src), and these files have been organized into modular applications using a [Scientific Fileystem](https://sci-f.github.io) that has been installed into the containers. The entry points to the containers serve to provide the steps in a modular fashion, and we describe in detail usage below for the container technologies [Singularity](http://singularity.lbl.gov) and [Docker](https://docs.docker.com/get-started/). The steps include preprocessing and feature selection ("PPFS") and  classification ("classifier,") that together form a simple machine learning algorithm pipeline.
 
+[![asciicast](https://asciinema.org/a/163241.png)](https://asciinema.org/a/163241?speed=3)
+
 ## Quick Start
 If you don't feel like reading tutorials, here are the commands to run everything for each
 of Docker and Singularity.
@@ -16,7 +18,8 @@ $ singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
 
 # Without any arguments, is akin to running ./aim-ml run pipeline
 $ ./aim-ml
-
+```
+```
 [pipeline] executing /bin/bash /scif/apps/pipeline/scif/runscript
 starting [preprocess]...
      preprocessed data --> /tmp/PPFS_databc4ebe0b.rda
@@ -40,7 +43,6 @@ the image, continue reading.
 ## The Scientific Filesystem Recipe
 Whether we are installing these applications as modules onto your host *or* a container,
 we can do this easily using a [Scientific Fileystem (SCIF)](https://sci-f.github.io). SCIF is nothing more than a filesystem organization, and a set of environment variables and functions that make it easy to discover your work. The core of SCIF is a simple recipe file, and we have [written one here](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/aim-ml.scif) to define each of the steps in "preprocess" and "classify".
-
 
 ## Singularity
 Singularity is a container technology that is friendly to run on a shared resource. If 
