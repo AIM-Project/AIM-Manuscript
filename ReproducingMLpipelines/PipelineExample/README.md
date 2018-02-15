@@ -297,4 +297,4 @@ Test_Predict ALL AML
    Uncertain   1   2
 ```
 
-That's it! Please [post an issue](https://github.com/AIM-project/AIM-Manuscript) if you have any questions.
+That's it! Please [post an issue](https://github.com/AIM-project/AIM-Manuscript/issues) if you have any questions.
