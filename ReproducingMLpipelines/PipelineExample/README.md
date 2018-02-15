@@ -1,10 +1,7 @@
 # Example
 
 This is an example (using paper1) for running the pipeline using reproducible 
-[containers](https://opensource.com/resources/what-are-linux-containers). The original code is in the [source folder](src), and these files
-have been organized into modular applications using a [Scientific Fileystem](https://sci-f.github.io) that has been installed into the containers. The entry points to the containers
-serve to provide the steps in a modular fashion, and we describe in detail usage below for 
-the container technologies [Singularity](http://singularity.lbl.gov) and [Docker](https://docs.docker.com/get-started/). The steps include preprocessing and feature selection ("PPFS") and  classification ("classifier,") that together form a simple machine learning algorithm pipeline.
+[containers](https://opensource.com/resources/what-are-linux-containers). The original code is in the [source folder](src), and these files have been organized into modular applications using a [Scientific Fileystem](https://sci-f.github.io) that has been installed into the containers. The entry points to the containers serve to provide the steps in a modular fashion, and we describe in detail usage below for the container technologies [Singularity](http://singularity.lbl.gov) and [Docker](https://docs.docker.com/get-started/). The steps include preprocessing and feature selection ("PPFS") and  classification ("classifier,") that together form a simple machine learning algorithm pipeline.
 
 ## Quick Start
 If you don't feel like reading tutorials, here are the commands to run everything for each
@@ -48,14 +45,19 @@ we can do this easily using a [Scientific Fileystem (SCIF)](https://sci-f.github
 ## Singularity
 Singularity is a container technology that is friendly to run on a shared resource. If 
 you are a researcher, and aren't running this on your local machine, you likely will want
-to use a Singularity image. If you aren't familiar with Singularity, read about it [here](http://singularity.lbl.gov) and [install it](http://singularity.lbl.gov/install-linux). We will build our image from the included [Singularity](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Singularity) recipe, which uses the same Scientific Filesystem as the Dockerfile, and the same base image on [Docker Hub](https://hub.docker.com/r/vanessa/aim-manuscript/). 
+to use a Singularity image. If you aren't familiar with Singularity, read about it [here](http://singularity.lbl.gov) and [install it](http://singularity.lbl.gov/install-linux). We will build our image from the included [Singularity](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Singularity) recipe, which uses the same Scientific Filesystem as the Dockerfile, and the same base image on [Docker Hub](https://hub.docker.com/r/vanessa/aim-manuscript/). The container is available on Singularity Hub, and can be pulled first instead of a build.
+
+[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/602)
 
 ```
-# Build the container
+# Pull the container...
+$ singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
+
+# or build the container
 sudo singularity build aim-ml Singularity
 ```
 
-What applications did we install?
+What applications are installed?
 
 ```
 $ ./aim-ml apps
