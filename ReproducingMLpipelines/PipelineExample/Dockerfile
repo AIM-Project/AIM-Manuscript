@@ -1,4 +1,4 @@
-FROM vanessa/aim-ml:base
+FROM vanessa/aim-manuscript:base
 
 ##############################################
 # docker build -t vanessa/aim-ml .
