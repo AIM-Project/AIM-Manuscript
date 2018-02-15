@@ -39,7 +39,7 @@ the image, continue reading.
 
 ## The Scientific Filesystem Recipe
 Whether we are installing these applications as modules onto your host *or* a container,
-we can do this easily using a [Scientific Fileystem (SCIF)](https://sci-f.github.io). SCIF is nothing more than a filesystem organization, and a set of environment variables and functions that make it easy to discover your work. The core of SCIF is a simple recipe file, and we have [written one here]() to define each of the steps in "preprocess" and "classify".
+we can do this easily using a [Scientific Fileystem (SCIF)](https://sci-f.github.io). SCIF is nothing more than a filesystem organization, and a set of environment variables and functions that make it easy to discover your work. The core of SCIF is a simple recipe file, and we have [written one here](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/aim-ml.scif) to define each of the steps in "preprocess" and "classify".
 
 
 ## Singularity

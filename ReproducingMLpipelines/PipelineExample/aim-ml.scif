@@ -14,6 +14,10 @@ This script will perform basic preprocessing, including cleaning and feature
 
     [docker]
     docker run vanessa/aim-ml run preprocess    
+  
+    [singularity]
+    singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
+    ./aim-ml run preprocess
 
 
 %appfiles preprocess
@@ -48,6 +52,11 @@ Classification is done after preprocessing, and so it requires an input
     [docker]
     docker run vanessa/aim-ml run classify
 
+    [singularity]
+    singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
+    ./aim-ml run classify
+
+
 %appinstall classify
     cp /src/Classifier.R bin/
     cp /src/run_classify.R bin/
@@ -68,6 +77,10 @@ Classification is done after preprocessing, and so it requires an input
 
     [docker]
     docker run vanessa/aim-ml run pipeline
+
+    [singularity]
+    singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
+    ./aim-ml
 
 
 %apprun pipeline
