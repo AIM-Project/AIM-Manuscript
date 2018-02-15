@@ -42,9 +42,72 @@ the image, continue reading.
 Whether we are installing these applications as modules onto your host *or* a container,
 we can do this easily using a [Scientific Fileystem (SCIF)](https://sci-f.github.io). SCIF is nothing more than a filesystem organization, and a set of environment variables and functions that make it easy to discover your work. The core of SCIF is a simple recipe file, and we have [written one here]() to define each of the steps in "preprocess" and "classify".
 
+
+## Singularity
+Singularity is a container technology that is friendly to run on a shared resource. If 
+you are a researcher, and aren't running this on your local machine, you likely will want
+to use a Singularity image. If you aren't familiar with Singularity, read about it [here](http://singularity.lbl.gov) and [install it](http://singularity.lbl.gov/install-linux). We will build our image from the included [Singularity](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Singularity) recipe, which uses the same Scientific Filesystem as the Dockerfile, and the same base image on [Docker Hub](https://hub.docker.com/r/vanessa/aim-manuscript/). 
+
+```
+# Build the container
+sudo singularity build aim-ml Singularity
+```
+
+What applications did we install?
+
+```
+$ ./aim-ml apps
+  pipeline
+preprocess
+  classify
+```
+
+We can inspect any particular application:
+
+```
+$ ./aim-ml inspect
+$ ./aim-ml inspect pipeline
+```
+
+or just ask for help:
+
+```
+$ ./aim-ml help pipeline
+```
+
+To be brief, we can run the entire pipeline without thinking about the individual modules with the included application `pipeline`. This will use the [included data](src/GolubData.rda) and save it to a temporary file, and that temporary file will be passed on to the final classification step:
+
+```
+$ ./aim-ml run pipeline
+```
+
+Here is what it looks like to run an individual step. In the example below, we do the "preprocess" step to output a file to tmp. Singularity has the advantage over Docker here because it will automatically map the /tmp directory to your machine (Docker doesn't).
+
+```
+# Preprocess
+$ ./aim-ml run preprocess
+[preprocess] executing /bin/bash /scif/apps/preprocess/scif/runscript
+/tmp/PPFS_data836fc2f45.rda
+```
+
+The steps "preprocess" and "classify" are both combined to run together (inside the container) using "pipeline."
+
+
+### Interaction with the Container
+The previous commands, although run externally to the container, can also be run from an interactive shell inside the container. You can shell into the container as follows:
+
+```
+$ ./aim-ml shell
+
+# or in context of an application
+$ ./aim-ml shell preprocess
+```
+
+See the section after Docker, discussed next, for interaction with the SCIF (it's the same for both containers once you shell inside.
+
+
 ## Docker
-If you aren't familiar with Docker, read about it [here](https://docs.docker.com/get-started/).
-First we will build our image from the included [Dockerfile](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Dockerfile), and it's [base](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Dockerfile.base). You can choose to skip these steps as we provide the images on [Docker Hub]().
+If you aren't familiar with Docker, read about it [here](https://docs.docker.com/get-started/). First we will build our image from the included [Dockerfile](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Dockerfile), and it's [base](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Dockerfile.base). You can choose to skip these steps as we provide the images on [Docker Hub](https://hub.docker.com/r/vanessa/aim-manuscript/).
 
 ```
 # Build the base and the image that uses it
@@ -116,11 +179,22 @@ $ docker run vanessa/aim-ml run preprocess
 The steps "preprocess" and "classify" are both combined to run together (inside the container) using "pipeline."
 
 
-### Interaction with the Container
-The previous commands, although run externally to the container, can also be run from an interactive shell inside the container. You can shell into the container by defining an "interactive terminal" with an entrypoint as `/bin/bash`:
+## Interaction with the Container
+Whether you use Doker or Singularity, it's useful to be able to shell inside to debug
+and test. For Docker, you can shell into the container by defining an "interactive terminal" with an entrypoint as `/bin/bash`:
 
 ```
 $ docker run -it --entrypoint /bin/bash  vanessa/aim-ml
+```
+
+And for Singularity, it's a bit simple (and you can rest assured /tmp and your `$HOME` 
+are automatically bound).
+
+```
+$ ./aim-ml shell
+
+# or in context of an application
+$ ./aim-ml shell preprocess
 ```
 
 Once inside, we interact with the scientific filesystem via the `scif` client. This is what we are interacting with from the outside to - it serves as a single entrypoint that maps to many different entry points, one for each application (or step in our pipeline). In fact, the entire thing was installed with one command, and this is the command that can be run on
@@ -216,3 +290,5 @@ Test_Predict ALL AML
    AML         0  12
    Uncertain   1   2
 ```
+
+That's it! Please [post an issue](https://github.com/AIM-project/AIM-Manuscript) if you have any questions.
