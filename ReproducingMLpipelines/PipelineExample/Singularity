@@ -1,5 +1,5 @@
 BootStrap: docker
-From: vanessa/aim-ml:base
+From: vanessa/aim-manuscript:base
 
 #
 # sudo singularity build aim-ml Singularity
