@@ -1,3 +1,5 @@
+#/usr/bin/env Rscript
+
 # Paper 1
 ## Helper function 
 get_p = function(train_d, train_r){
