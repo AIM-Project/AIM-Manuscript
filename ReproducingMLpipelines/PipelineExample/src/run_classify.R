@@ -23,7 +23,7 @@ if (length(args)==0) {
 }
 
 tmpfile=args[1]
-print('Reading in testing and training from',tmpfile)
+cat('Reading in testing and training from', tmpfile,'\n')
 
 Paper1Selection <- readRDS(tmpfile)
 rslt = classifier1(Paper1Selection$train_predict, 

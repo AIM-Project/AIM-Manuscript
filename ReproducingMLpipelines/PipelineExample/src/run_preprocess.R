@@ -20,19 +20,21 @@ setwd(pwd)
 
 args = commandArgs(trailingOnly=TRUE)
 
+outputfile = tempfile(pattern = "PPFS_data", 
+                      tmpdir = '/tmp',
+                      fileext = ".rda")
+
 # run_classify.R <input> [output]
 
 if (length(args)==0) {
 
      # Provided nothing
      inputfile = "../GolubData.rda"
-     outputfile = tempfile(pattern = "PPFS_data", tmpdir=tempdir()) 
 
 } else if (length(args)==1){
 
      # Provided data input, no output
      inputfile = args[1]
-     outputfile = tempfile(pattern = "PPFS_data", tmpdir=tempdir())
 
 } else {
 
@@ -41,10 +43,6 @@ if (length(args)==0) {
      outputfile=args[2]
 
 }
-
-
-cat('Reading in testing and training from', inputfile, '\n')
-
 
 # Load data and required functions
 load(inputfile)
@@ -58,5 +56,5 @@ Paper1Selection = PPFS1(golub_train_predict,
                         golub_test_response)
 
 # Save to temporary file, to pass on
-saveRDS(Paper1Selection, outputfile)
+saveRDS(Paper1Selection, outputfile) 
 cat(outputfile)

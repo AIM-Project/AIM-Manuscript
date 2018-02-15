@@ -7,10 +7,14 @@ This script will perform basic preprocessing, including cleaning and feature
     selection for a dataset. If used without providing any input arguments,
     the dataset that comes with the container (GolubData.rda) is used by 
     default. If you run the application module alone, you can specify your own.
-    Here are some examples using a SCIF installed in a Docker container:
+    Here is a simple running command. You can specify the output file as the
+    first argument, and you would need to map it to the container to retrieve
+    it. Note that by default, the output Rda file is written to /tmp in the
+    container.
 
-    # Run with default input data, and output to /tmp mapped to $PWD
-    
+    [docker]
+    docker run vanessa/aim-ml run preprocess    
+
 
 %appfiles preprocess
     /src/GolubData.rda
@@ -21,7 +25,7 @@ This script will perform basic preprocessing, including cleaning and feature
 
 %appenv preprocess
     PPFS_DATA="${SCIF_APPROOT}/GolubData.rda"
-    export PPFS_DATA PPFS_FUNCS
+    export PPFS_DATA
 
 %apprun preprocess
     if [ $# -eq 0 ]
@@ -32,8 +36,6 @@ This script will perform basic preprocessing, including cleaning and feature
     fi
 
 
-    
-
 ####################################
 # Classify
 ####################################
@@ -43,20 +45,34 @@ Classification is done after preprocessing, and so it requires an input
     data file saved from the preprocess step.  The result is printed to the
     console at the end.
 
+    [docker]
+    docker run vanessa/aim-ml run classify
+
 %appinstall classify
     cp /src/Classifier.R bin/
     cp /src/run_classify.R bin/
 
 %apprun classify
-    exec Rscript ${SCIF_APPBIN}/run_classify.R "$@"
+    Rscript ${SCIF_APPBIN}/run_classify.R "$@"
 
 
 ####################################
 # Pipeline
 ####################################
 
+%apphelp pipeline
+    You can run the entire pipeline as the creators intended, using the
+    provided input data (no arguments) or a custom data file (one .Rda file).
+    Keep in mind that if you use your own data file, with  Docker you need to
+    make sure it's location is mapped to the conainer.
+
+    [docker]
+    docker run vanessa/aim-ml run pipeline
+
+
 %apprun pipeline
-    #PPFS_DATA=$(Rscript ${SCIF_APPRUN_preprocess})
-    PPFS_DATA=$(scif run preprocess)
-    scif run classify $PPFS_DATA    
-    #Rscript ${SCIF_APPRUN_classify} $PPFS_DATA
+    echo "starting [preprocess]..."
+    PPFS_DATA=$(scif --quiet run preprocess)
+    echo "     preprocessed data --> ${PPFS_DATA}"
+    echo "starting [classify]..."
+    scif --quiet run classify ${PPFS_DATA}

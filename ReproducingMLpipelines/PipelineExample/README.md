@@ -6,15 +6,48 @@ have been organized into modular applications using a [Scientific Fileystem](htt
 serve to provide the steps in a modular fashion, and we describe in detail usage below for 
 the container technologies [Singularity](http://singularity.lbl.gov) and [Docker](https://docs.docker.com/get-started/). The steps include preprocessing and feature selection ("PPFS") and  classification ("classifier,") that together form a simple machine learning algorithm pipeline.
 
+## Quick Start
+If you don't feel like reading tutorials, here are the commands to run everything for each
+of Docker and Singularity.
+
+```
+# [docker]
+$ docker run vanessa/aim-ml run pipeline
+
+# [singularity]
+$ singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
+$ ./aim-ml run pipeline
+
+[pipeline] executing /bin/bash /scif/apps/pipeline/scif/runscript
+starting [preprocess]...
+     preprocessed data --> /tmp/PPFS_databc4ebe0b.rda
+starting [classify]...
+Reading in testing and training from /tmp/PPFS_databc4ebe0b.rda
+             Train_Actual
+Train_Predict ALL AML
+    ALL        26   0
+    AML         0  11
+    Uncertain   1   0
+            Test_Actual
+Test_Predict ALL AML
+   ALL        19   0
+   AML         0  12
+   Uncertain   1   2
+```
+
+For detailed walkthroughs of (optionally) building, running, and interacting with
+the image, continue reading.
+
 ## The Scientific Filesystem Recipe
 Whether we are installing these applications as modules onto your host *or* a container,
 we can do this easily using a [Scientific Fileystem (SCIF)](https://sci-f.github.io). SCIF is nothing more than a filesystem organization, and a set of environment variables and functions that make it easy to discover your work. The core of SCIF is a simple recipe file, and we have [written one here]() to define each of the steps in "preprocess" and "classify".
 
 ## Docker
 If you aren't familiar with Docker, read about it [here](https://docs.docker.com/get-started/).
-First we will build our image from the included [Dockerfile](Dockerfile), and it's [base](Dockerfile.base). You can choose to skip these steps as we provide the images on [Docker Hub]().
+First we will build our image from the included [Dockerfile](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Dockerfile), and it's [base](https://github.com/vsoch/AIM-Manuscript/blob/master/ReproducingMLpipelines/PipelineExample/Dockerfile.base). You can choose to skip these steps as we provide the images on [Docker Hub]().
 
 ```
+# Build the base and the image that uses it
 docker build -f Dockerfile.base -t vanessa/aim-ml:base .
 docker build -t vanessa/aim-ml .
 ```
@@ -34,23 +67,54 @@ We can inspect any particular application:
 $ docker run vanessa/aim-ml inspect pipeline
 {
     "pipeline": {
+        "apphelp": [
+            "    You can run the entire pipeline as the creators intended, using the",
+            "    provided input data (no arguments) or a custom data file (one .Rda file).",
+            "    Keep in mind that if you use your own data file, with  Docker you need to",
+            "    make sure it's location is mapped to the conainer.",
+            "    [docker]",
+            "    docker run vanessa/aim-ml run pipeline"
+        ],
         "apprun": [
-            "    PPFS_DATA=$(scif run preprocess)",
-            "    scif run classify $PPFS_DATA    "
+            "    echo \"Starting [preprocess]...\"",
+            "    PPFS_DATA=$(scif --quiet run preprocess)",
+            "    echo \"[preprocessed data]:${PPFS_DATA}\"",
+            "    echo \"Starting [classify]...\"",
+            "    scif --quiet run classify ${PPFS_DATA}"
         ]
     }
 }
 ```
-To be brief, we can run the entire pipeline without thinking about the individual modules with the included application `pipeline`:
+
+or just ask for help:
 
 ```
-
+$ docker run vanessa/aim-ml help pipeline
+    You can run the entire pipeline as the creators intended, using the
+    provided input data (no arguments) or a custom data file (one .Rda file).
+    Keep in mind that if you use your own data file, with  Docker you need to
+    make sure it's location is mapped to the conainer.
+    [docker]
+    docker run vanessa/aim-ml run pipeline
 ```
 
-This would be the same as doing:
+To be brief, we can run the entire pipeline without thinking about the individual modules with the included application `pipeline`. This will use the [included data](src/GolubData.rda) and save it to a temporary file, and that temporary file will be passed on to the final classification step:
 
 ```
+$ docker run vanessa/aim-ml run pipeline
 ```
+
+Here is what it looks like to run an individual step. In the example below, we do the "preprocess" step to output a file to tmp. Note that if you want to save the output, you would need to map it as a volume to the container.
+
+```
+# Preprocess
+$ docker run vanessa/aim-ml run preprocess
+[preprocess] executing /bin/bash /scif/apps/preprocess/scif/runscript
+/tmp/PPFS_data836fc2f45.rda
+```
+
+The steps "preprocess" and "classify" are both combined to run together (inside the container) using "pipeline."
+
 
 ### Interaction with the Container
 The previous commands, although run externally to the container, can also be run from an interactive shell inside the container. You can shell into the container by defining an "interactive terminal" with an entrypoint as `/bin/bash`:
@@ -93,19 +157,33 @@ scif inspect preprocess
             "This script will perform basic preprocessing, including cleaning and feature",
             "    selection for a dataset. If used without providing any input arguments,",
             "    the dataset that comes with the container (GolubData.rda) is used by ",
-            "    default. If you run the application module alone, you can specify your own."
+            "    default. If you run the application module alone, you can specify your own.",
+            "    Here is a simple running command. You can specify the output file as the",
+            "    first argument, and you would need to map it to the container to retrieve",
+            "    it. Note that by default, the output Rda file is written to /tmp in the",
+            "    container.",
+            "    [docker]",
+            "    docker run vanessa/aim-ml run preprocess    "
+        ],
+        "appfiles": [
+            "/src/GolubData.rda"
         ],
         "appinstall": [
-            "    cp /src/GolubData.rda bin/",
             "    cp /src/PPFS.R bin/",
             "    cp /src/run_preprocess.R bin/"
         ],
+        "appenv": [
+            "PPFS_DATA=\"${SCIF_APPROOT}/GolubData.rda\"",
+            "export PPFS_DATA"
+        ],
         "apprun": [
+            "PPFS_DATA=\"${SCIF_APPROOT}/GolubData.rda\"",
+            "export PPFS_DATA",
             "    if [ $# -eq 0 ]",
             "        then",
-            "        exec Rscript ${SCIF_APPBIN}/run_preprocess.R ${SCIF_APPROOT}",
+            "        Rscript ${SCIF_APPBIN}/run_preprocess.R \"${PPFS_DATA}\"",
             "    else",
-            "        exec Rscript ${SCIF_APPBIN}/run_preprocess.R \"$@\"",
+            "        Rscript ${SCIF_APPBIN}/run_preprocess.R \"$@\"",
             "    fi"
         ]
     }
@@ -115,24 +193,26 @@ scif inspect preprocess
 We can run a step:
 
 ```
+$ scif run preprocess
+$ scif --quiet run preprocess  # suppress additional output
+
+/tmp/PPFS_data95ef71b08.rda
 ```
 
-
-We could also do this interactively in a shell (meaning the environment as we defined for a particular application is active).  For example, if I want to test to preprocess command above, I would do:
+Then run the classify step:
 
 ```
-$ scif shell preprocess
-$ echo $SCIF_APPBIN
-/scif/apps/preprocess/bin
-$ echo $SCIF_APPROOT
-/scif/apps/preprocess
+$ scif run classify /tmp/PPFS_data95ef71b08.rda
+/tmp/PPFS_data15558b60a0.rda[classify] executing /bin/bash /scif/apps/classify/scif/runscript /tmp/PPFS_data95ef71b08.rda
+Reading in testing and training from /tmp/PPFS_data95ef71b08.rda
+             Train_Actual
+Train_Predict ALL AML
+    ALL        26   0
+    AML         0  11
+    Uncertain   1   0
+            Test_Actual
+Test_Predict ALL AML
+   ALL        19   0
+   AML         0  12
+   Uncertain   1   2
 ```
-
-
-
-## Preprocessing anid Feature Selection(PPFS)
-This notebook is for prerprocessing the data and do feature selection for building classifiers later.
-## Classifier
-This notebook is for building classifiers.
-## GolubData
-A R data file include all our data.
