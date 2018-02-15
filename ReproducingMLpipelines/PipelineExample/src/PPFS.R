@@ -1,6 +1,3 @@
-load("GolubData.rda")
-set.seed(2017)
-
 # Paper 1
 ## Helper Functions
 golub_filter = function(x, r = 5, d=500){
