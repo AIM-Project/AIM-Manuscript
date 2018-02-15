@@ -16,7 +16,9 @@ $ docker run vanessa/aim-ml run pipeline
 
 # [singularity]
 $ singularity pull --name aim-ml shub://vsoch/AIM-Manuscript
-$ ./aim-ml run pipeline
+
+# Without any arguments, is akin to running ./aim-ml run pipeline
+$ ./aim-ml
 
 [pipeline] executing /bin/bash /scif/apps/pipeline/scif/runscript
 starting [preprocess]...

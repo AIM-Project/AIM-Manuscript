@@ -29,6 +29,15 @@ This is an example for a container that serves to make it easy to run a simple
     pip3 install scif
     scif install /aim-ml.scif
 
+%runscript
+    if [ $# -eq 0 ]
+        then
+        exec /usr/local/bin/scif run pipeline
+    else
+        exec /usr/local/bin/scif "${@}"
+    fi
+
+
 %environment
     DEBIAN_FRONTEND=noninteractive
     export DEBIAN_FRONTEND
