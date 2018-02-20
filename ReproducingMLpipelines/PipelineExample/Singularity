@@ -1,0 +1,43 @@
+BootStrap: docker
+From: vanessa/aim-manuscript:base
+
+#
+# sudo singularity build aim-ml Singularity
+#
+
+%help
+
+This is an example for a container that serves to make it easy to run a simple
+    machine learning pipeline, including a preprocessing and classify step.
+
+    # List all apps
+    ./aim-ml apps
+
+    # Run a specific app
+    ./aim-ml run <app>
+
+    # Execute entire pipeline
+    ./aim-ml run pipeline
+
+%files
+    aim-ml.scif
+    src/ /src
+   
+%post
+    apt-get update
+
+    pip3 install scif
+    scif install /aim-ml.scif
+
+%runscript
+    if [ $# -eq 0 ]
+        then
+        exec /usr/local/bin/scif run pipeline
+    else
+        exec /usr/local/bin/scif "${@}"
+    fi
+
+
+%environment
+    DEBIAN_FRONTEND=noninteractive
+    export DEBIAN_FRONTEND
